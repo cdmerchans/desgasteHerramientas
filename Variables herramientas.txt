@@ -1,0 +1,8 @@
+theta
+ancho
+rangoV
+RangoH
+PerdidaH
+sigmoid
+thresholdlocal
+areathreshold
