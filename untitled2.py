@@ -8,6 +8,7 @@ from skimage.exposure import equalize_hist, adjust_sigmoid
 from skimage.filters import threshold_local
 from skimage.morphology import area_closing, area_opening
 from skimage.feature import canny
+import plotly.express as px
 
 import time
 
@@ -52,37 +53,45 @@ def Perfiles(imagen, sigmoid, thresholdLocal,areaThreshold):
     return x, y
 
         
-file = open('C:/Users/PC/Documents/Archivos/Análisis de desgaste/Código final/Herramientas disponibles/Herramienta esférica de 3mm.txt')
+file = open('C:/Users/PC/Documents/Archivos/Análisis de desgaste/Código final/DesgasteHerramientas/Herramientas disponibles/.Plana de 2 mm.txt')
 contents = file.read().split('\n')
 
-herramienta = Herramienta('Herramienta esférica de 3 mm', float(contents[0]), float(contents[1]), int(contents[2]), int(contents[3]), int(contents[4]), bool(contents[5]), int(contents[6]), int(contents[7]))
+herramienta = Herramienta('Herramienta de prueba cuyo nombre vale mondá', float(contents[0]), float(contents[1]), int(contents[2]), int(contents[3]), int(contents[4]), bool(contents[5]), int(contents[6]), int(contents[7]))
 
-imagen  = imread('C:/Users/PC/Documents/Archivos/Análisis de desgaste/350/Esférica de 3 mm/19-05-2022/Imágenes/1/Thu May 19 17-04-27.jpg')
+imagen  = imread('C:/Users/PC/Documents/Archivos/Análisis de desgaste/350/Plana de 2 mm/12-04-2022/Imágenes/3/Mon Apr 18 07-33-49.jpg')
 imagenGris = rgb2gray(imagen)
 imagenEscalada = rescale(imagenGris, 0.2, anti_aliasing=False)
 
-x1 = 330
-y1 = 450
-x2 = 600
-y2 = 540
+'''
+figura = px.imshow(imagenEscalada, color_continuous_scale='gray')
+figura.update_layout(coloraxis_showscale=False)
+figura.update_xaxes(showticklabels=False)
+figura.update_yaxes(showticklabels=False)
+figura.show() 
+'''
 
-imagen, alma = CentarImagen(imagenEscalada, herramienta, x1, x2, y1, y2)
+x1 = 210
+y1 = 423
+x2 = 755
+y2 = 772
 
-imagen = imagen[range(alma[0]-herramienta.rangoX,alma[0]+herramienta.rangoX),:]
+imagen0, alma = CentarImagen(imagenEscalada, herramienta, x1, x2, y1, y2)
+
+imagen = imagen0[range(alma[0]-herramienta.rangoX,alma[0]+herramienta.rangoX),:]
 imagen1 = imagen[:,range(alma[1]-herramienta.perdidaY-herramienta.rangoY,alma[1]-herramienta.perdidaY)]
 imagen2 = imagen[:,range(alma[1]+herramienta.perdidaY,alma[1]+herramienta.perdidaY+herramienta.rangoY)]
 
 start = time.time()
-xi, yi = Perfiles(imagen1, True, 551, 10240)
+xi, yi = Perfiles(imagen1, herramienta.sigmoid, herramienta.thresholdLocal, herramienta.areaThreshold)
 end = time.time()
-xd, yd = Perfiles(imagen2, True, 551, 10240)
-
-
-figura, f1 = plot.subplots(ncols = 2, figsize = (12,8))
-f1[0].imshow(imagen1,cmap = 'gray')
-f1[1].imshow(imagen2,cmap = 'gray')
-f1[0].scatter(xi,yi, s = 0.5, color = 'red')
-f1[1].scatter(xd, yd, s = 0.5, color = 'red')
-
-
+xd, yd = Perfiles(imagen2, herramienta.sigmoid, herramienta.thresholdLocal, herramienta.areaThreshold)
 print(end - start)
+
+figura, f1 = plot.subplots(ncols = 2, nrows = 2, figsize = (12,8))
+f1[0,0].imshow(imagenEscalada,cmap = 'gray')
+f1[0,1].imshow(imagen0,cmap = 'gray')
+f1[0,1].plot(alma[1], alma[0], color='red', marker='+',linestyle='None', markersize=6)
+f1[1,0].imshow(imagen1,cmap = 'gray')
+f1[1,1].imshow(imagen2,cmap = 'gray')
+f1[1,0].scatter(xi,yi, s = 0.5, color = 'red')
+f1[1,1].scatter(xd, yd, s = 0.5, color = 'red')

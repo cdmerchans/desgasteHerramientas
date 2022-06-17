@@ -13,7 +13,7 @@ class VentanaListaHerramientas():
 
         self.root.geometry( "350x100" )
         
-        opciones = LeerListadoHerramientas('C:/Users/PC/Documents/Archivos/Análisis de desgaste/Código final/Herramientas disponibles')
+        opciones = LeerListadoHerramientas('C:/Users/PC/Documents/Archivos/Análisis de desgaste/Código final/DesgasteHerramientas/Herramientas disponibles')
 
         self.tipoHerramienta = StringVar()
         self.tipoHerramienta.set('----------')
