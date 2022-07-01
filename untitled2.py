@@ -53,27 +53,29 @@ def Perfiles(imagen, sigmoid, thresholdLocal,areaThreshold):
     return x, y
 
         
-file = open('C:/Users/PC/Documents/Archivos/Análisis de desgaste/Código final/DesgasteHerramientas/Herramientas disponibles/.Plana de 2 mm.txt')
+file = open('C:/Users/PC/Documents/Archivos/Análisis de desgaste/Código final/DesgasteHerramientas/Herramientas disponibles/Prueba Ing Cabas.txt')
 contents = file.read().split('\n')
 
 herramienta = Herramienta('Herramienta de prueba cuyo nombre vale mondá', float(contents[0]), float(contents[1]), int(contents[2]), int(contents[3]), int(contents[4]), bool(contents[5]), int(contents[6]), int(contents[7]))
 
-imagen  = imread('C:/Users/PC/Documents/Archivos/Análisis de desgaste/350/Plana de 2 mm/12-04-2022/Imágenes/3/Mon Apr 18 07-33-49.jpg')
+#imagen  = imread('C:/Users/PC/Documents/Archivos/Análisis de desgaste/350/Plana de 2 mm/12-04-2022/Imágenes/3/Mon Apr 18 07-33-49.jpg')
+imagen  = imread('C:/Users/PC/Desktop/Probetas/E/Fri Jun 17 17-02-55.jpg')
+imagen  = imread('C:/Users/PC/Desktop/Probetas/F/Fri Jun 17 17-05-19.jpg')
 imagenGris = rgb2gray(imagen)
 imagenEscalada = rescale(imagenGris, 0.2, anti_aliasing=False)
 
-'''
+
 figura = px.imshow(imagenEscalada, color_continuous_scale='gray')
 figura.update_layout(coloraxis_showscale=False)
 figura.update_xaxes(showticklabels=False)
 figura.update_yaxes(showticklabels=False)
 figura.show() 
-'''
 
-x1 = 210
-y1 = 423
-x2 = 755
-y2 = 772
+
+x1 = 396#261
+y1 = 233#496
+x2 = 687#577
+y2 = 533#767
 
 imagen0, alma = CentarImagen(imagenEscalada, herramienta, x1, x2, y1, y2)
 

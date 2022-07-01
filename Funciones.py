@@ -63,7 +63,7 @@ def MedirDistanciaTotal(coordenadas1, coordenadas2):
 def RecortarTipoHerramienta(tipoHerramienta):
     
     herramientasDisponibles = []
-    rutaHerramientas = 'C:/Users/PC/Documents/Archivos/Análisis de desgaste/Código final/Herramientas disponibles'
+    rutaHerramientas = 'C:/Users/PC/Documents/Archivos/Análisis de desgaste/Código final/DesgasteHerramientas/Herramientas disponibles'
 
     for archivo in os.listdir(rutaHerramientas):
         
@@ -94,6 +94,7 @@ def CentarImagen(imagen, herramienta, x1, x2, y1, y2):
 
     coordenadas = np.matrix([[x1,y1],[x2,y2]])
     theta = math.atan((coordenadas[1,0]-coordenadas[0,0])/(coordenadas[1,1]-coordenadas[0,1]))
+
     distanciaTotal, distanciaEnx, distanciaEny =  MedirDistanciaTotal((np.asarray(coordenadas[1])).flatten(), (np.asarray(coordenadas[0])).flatten())
 
     alma = np.asarray(coordenadas[1,:]-[distanciaTotal/2*math.sin(theta),distanciaTotal/2*math.cos(theta)])[0]
@@ -109,7 +110,7 @@ def CentarImagen(imagen, herramienta, x1, x2, y1, y2):
     escalaEnx = distanciaTotalPatron[1]/distanciaEnx
     escalaEny = distanciaTotalPatron[0]/distanciaEny
     escalas = (escalaEnx, escalaEny)
-    imagenEscalada = rescale(imagenRotada,escalas)
+    imagenEscalada = rescale(imagenRotada,escalas,anti_aliasing=True)
 
     coordenadasEscaladas = np.multiply(coordenadasRotadas,escalas)
     almaEscalada = np.multiply(alma,escalas)
