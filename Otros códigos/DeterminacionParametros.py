@@ -59,7 +59,7 @@ contents = file.read().split('\n')
 herramienta = Herramienta('Herramienta de prueba cuyo nombre vale mondá', float(contents[0]), float(contents[1]), int(contents[2]), int(contents[3]), int(contents[4]), bool(contents[5]), int(contents[6]), int(contents[7]))
 
 #imagen  = imread('C:/Users/PC/Documents/Archivos/Análisis de desgaste/350/Plana de 2 mm/12-04-2022/Imágenes/3/Mon Apr 18 07-33-49.jpg')
-imagen  = imread('C:/Users/PC/Desktop/Probetas/E/Fri Jun 17 17-02-55.jpg')
+#imagen  = imread('C:/Users/PC/Desktop/Probetas/E/Fri Jun 17 17-02-55.jpg')
 imagen  = imread('C:/Users/PC/Desktop/Probetas/F/Fri Jun 17 17-05-19.jpg')
 imagenGris = rgb2gray(imagen)
 imagenEscalada = rescale(imagenGris, 0.2, anti_aliasing=False)
