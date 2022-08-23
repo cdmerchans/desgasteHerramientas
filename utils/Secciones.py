@@ -7,8 +7,8 @@ import plotly.express as px
 import numpy as np
 from scipy import signal
 
-from Clases import *
-from Funciones import *
+from .Clases import *
+from .Funciones import *
 
 def SeleccionarImagen():
 
@@ -36,12 +36,13 @@ def SeleccionarTipoHerramienta():
 
     return tipoHerramienta
 
-def SeleccionarPuntos(rutaImagen, escala):
+def SeleccionarPuntos(rutaImagen):
 
     imagen  = imread(rutaImagen)
     imagenGris = rgb2gray(imagen)
-    imagenEscalada = rescale(imagenGris, escala, anti_aliasing=False)
-
+    print(imagenGris.shape)
+    imagenEscalada = rescale(imagenGris, [948/imagenGris.shape[0], 1265/imagenGris.shape[1]], anti_aliasing=False)
+    print(imagenEscalada.shape)
     figura = px.imshow(imagenEscalada, color_continuous_scale='gray')
     figura.update_layout(coloraxis_showscale=False)
     figura.update_xaxes(showticklabels=False)
@@ -102,15 +103,15 @@ def ObtenerPerfil(imagen, tipo, alma):
 
             imagenIzquierda, imagenDerecha,xIzquierda, yIzquierda, xDerecha, yDerecha= DeterminarPerfil(imagen, herramienta, alma)
 
-            return imagenIzquierda, imagenDerecha, xIzquierda, yIzquierda, xDerecha, yDerecha
+            return imagenIzquierda, imagenDerecha, xIzquierda, yIzquierda, xDerecha, yDerecha, herramienta
 
         except Exception as e:
 
-            return [e], [], False, False, False, False
+            return [e], [], False, False, False, False, False
 
     else:
         
-        return '[ee]', [], False, False, False, False
+        return '[ee]', [], False, False, False, False, False
 
 def SeleccionarPerfil():
 

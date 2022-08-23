@@ -15,7 +15,7 @@ import os
 
 class Herramienta:
     
-    def __init__(self, nombre, thetaobjetivo, ancho, rangoX, rangoY, perdidaY, sigmoid, thresholdLocal, areaThreshold):
+    def __init__(self, nombre, thetaobjetivo, ancho, rangoX, rangoY, perdidaY, sigmoid, thresholdLocal, areaThreshold, distanciaReferencia):
         
         self.nombre = nombre
         self.thetaobjetivo = thetaobjetivo
@@ -26,7 +26,8 @@ class Herramienta:
         self.sigmoid = sigmoid
         self.thresholdLocal = thresholdLocal
         self.areaThreshold = areaThreshold
-        
+        self.distanciaReferencia = distanciaReferencia
+
 def LeerListadoHerramientas(ruta):
     
         herramientasDisponibles = []
@@ -34,7 +35,7 @@ def LeerListadoHerramientas(ruta):
         
         for archivo in os.listdir(rutaHerramientas):
             
-            if archivo.endswith(".txt"):
+            if archivo.endswith(".txt") and not archivo.startswith("."):
                 
                 herramientasDisponibles.append(archivo.removesuffix('.txt'))
 
@@ -63,7 +64,7 @@ def MedirDistanciaTotal(coordenadas1, coordenadas2):
 def RecortarTipoHerramienta(tipoHerramienta):
     
     herramientasDisponibles = []
-    rutaHerramientas = 'C:/Users/PC/Documents/Archivos/Análisis de desgaste/Código final/DesgasteHerramientas/Herramientas disponibles'
+    rutaHerramientas = './Herramientas disponibles'
 
     for archivo in os.listdir(rutaHerramientas):
         
@@ -78,7 +79,7 @@ def RecortarTipoHerramienta(tipoHerramienta):
         file = open(rutaHerramientas+'/'+tipoHerramienta+'.txt')
         contents = file.read().split('\n')
         
-        herramienta = Herramienta(herramientasDisponibles[2], float(contents[0]), float(contents[1]), int(contents[2]), int(contents[3]), int(contents[4]), bool(contents[5]), int(contents[6]), int(contents[7]))
+        herramienta = Herramienta(herramientasDisponibles[2], float(contents[0]), float(contents[1]), int(contents[2]), int(contents[3]), int(contents[4]), bool(contents[5]), int(contents[6]), int(contents[7]), float(contents[8]))
         
         return herramienta
     
@@ -300,3 +301,15 @@ def ValoresDesgate(desgate, x):
 
     return round(maximo,2), round(minimo,2), round(promedio,2), round(promedioPositivo,2), round(promedioNegativo,2), round(integral,2), round(integralPositiva,2), round(integralNegativa,2), 
 
+def FactoresDeConversion(herramienta):
+
+    distancia = herramienta.distanciaReferencia
+    print(distancia)
+    print(herramienta.thetaobjetivo)
+    theta = herramienta.thetaobjetivo*math.pi/180
+    print(theta)
+
+    factorVertical = 400/(distancia*math.sin(theta))
+    factorHorizontal = 100/(distancia*math.cos(theta))
+
+    return factorVertical, factorHorizontal

@@ -6,3 +6,4 @@ PerdidaH
 sigmoid
 thresholdlocal
 areathreshold
+distanciaReferencia

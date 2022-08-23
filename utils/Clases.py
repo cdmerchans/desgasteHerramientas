@@ -1,7 +1,6 @@
 from tkinter import *
-from Funciones import VerificarEntero
 import os
-from Funciones import LeerListadoHerramientas        
+from .Funciones import LeerListadoHerramientas, VerificarEntero     
 
 class VentanaListaHerramientas():
 
@@ -13,7 +12,7 @@ class VentanaListaHerramientas():
 
         self.root.geometry( "350x100" )
         
-        opciones = LeerListadoHerramientas('C:/Users/PC/Documents/Archivos/Análisis de desgaste/Código final/DesgasteHerramientas/Herramientas disponibles')
+        opciones = LeerListadoHerramientas('./Herramientas disponibles')
 
         self.tipoHerramienta = StringVar()
         self.tipoHerramienta.set('----------')
