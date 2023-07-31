@@ -35,7 +35,7 @@ def LeerListadoHerramientas(ruta):
         
         for archivo in os.listdir(rutaHerramientas):
             
-            if archivo.endswith(".txt"):
+            if archivo.endswith(".txt") and not archivo.startswith("."):
                 
                 herramientasDisponibles.append(archivo.removesuffix('.txt'))
 
@@ -64,7 +64,7 @@ def MedirDistanciaTotal(coordenadas1, coordenadas2):
 def RecortarTipoHerramienta(tipoHerramienta):
     
     herramientasDisponibles = []
-    rutaHerramientas = 'C:/Users/PC/Documents/Archivos/Repositorios/DesgasteHerramientas/Herramientas disponibles'
+    rutaHerramientas = '../Herramientas disponibles'
 
     for archivo in os.listdir(rutaHerramientas):
         
